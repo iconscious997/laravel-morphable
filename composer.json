@@ -1,0 +1,33 @@
+{
+    "name": "ahnify/morphable",
+    "description": "easy querying on polymorphic relations",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arash",
+            "email": "ahntribe@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : ">=7.0",
+        "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0|~3.8.0",
+        "phpunit/phpunit": "^5.7|6.2|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ahnify\\Morphable\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ahnify\\Morphable\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
