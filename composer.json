@@ -1,5 +1,5 @@
 {
-    "name": "ahnify/morphable",
+    "name": "ahnify/laravel-morphable",
     "description": "easy querying on polymorphic relations",
     "type": "library",
     "license": "MIT",
