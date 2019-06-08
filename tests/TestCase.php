@@ -36,11 +36,10 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
-
     }
 
     protected function setUpDatabase()
@@ -65,7 +64,6 @@ abstract class TestCase extends Orchestra
             $table->morphs('commentable');
             $table->string('description');
             $table->timestamps();
-
         });
 
         collect(range(1, 20))->each(function (int $i) {
@@ -80,18 +78,18 @@ abstract class TestCase extends Orchestra
             ]);
             Comment::create([
                 'commentable_type' => Post::class,
-                'commentable_id' => $post->getKey(),
-                'description' => "post comment {$i}",
+                'commentable_id'   => $post->getKey(),
+                'description'      => "post comment {$i}",
             ]);
             Comment::create([
                 'commentable_type' => Video::class,
-                'commentable_id' => $video->getKey(),
-                'description' => "video comment {$i}",
+                'commentable_id'   => $video->getKey(),
+                'description'      => "video comment {$i}",
             ]);
             Comment::create([
                 'commentable_type' => 'images',
-                'commentable_id' => $image->getKey(),
-                'description' => "image comment {$i}",
+                'commentable_id'   => $image->getKey(),
+                'description'      => "image comment {$i}",
             ]);
         });
     }
@@ -102,5 +100,4 @@ abstract class TestCase extends Orchestra
             'images' => Image::class,
         ]);
     }
-
 }
