@@ -1,3 +1,9 @@
+<p align="center">
+<a href="https://packagist.org/packages/ahnify/laravel-morphable" target="_blank"><img src="https://poser.pugx.org/ahnify/laravel-morphable/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/ahnify/laravel-morphable" target="_blank"><img src="https://poser.pugx.org/ahnify/laravel-morphable/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/ahnify/laravel-morphable" target="_blank"><img src="https://poser.pugx.org/ahnify/laravel-morphable/license.svg" alt="License"></a>
+</p>
+
 # Morphable
 
 This package provides a trait that adds query scopes to an Eloquent model for easy querying on polymorphic relations.
