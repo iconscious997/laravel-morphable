@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Ahnify\Morphable\Helpers;
-
 
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
@@ -33,14 +31,14 @@ class Morphable
      */
     private $query;
 
-
     /**
      * Morphable constructor.
+     *
      * @param EloquentQueryBuilder $query
-     * @param MorphTo $polymorphicRelation
-     * @param callable $callback
-     * @param array $morphedRelations
-     * @param string $method
+     * @param MorphTo              $polymorphicRelation
+     * @param callable             $callback
+     * @param array                $morphedRelations
+     * @param string               $method
      */
     public function __construct(EloquentQueryBuilder $query, MorphTo $polymorphicRelation, callable $callback, array $morphedRelations, string $method)
     {
@@ -52,49 +50,50 @@ class Morphable
     }
 
     /**
-     * iterate on all polymorphic relations and applying callback on them
+     * iterate on all polymorphic relations and applying callback on them.
      */
     public function applyFilter()
     {
-        $this->query->{$this->method}(function($query){
-            collect($this->morphedRelations)->each(function($type,$index) use($query){
+        $this->query->{$this->method}(function ($query) {
+            collect($this->morphedRelations)->each(function ($type, $index) use ($query) {
                 $method = $index ? 'orWhere' : 'where';
-                $query->{$method}(function($query)use($type){
+                $query->{$method}(function ($query) use ($type) {
                     $this->addWhereMorph($query, $type);
                 });
             });
         });
     }
+
     /**
-     * Create EloquentQueryBuilder from DatabaseQueryBuilder & Apply query on that
-     * @param string $class
+     * Create EloquentQueryBuilder from DatabaseQueryBuilder & Apply query on that.
+     *
+     * @param string               $class
      * @param DatabaseQueryBuilder $query
      */
     private function applyCallback(string $class, DatabaseQueryBuilder $query)
     {
         /** @var Model $model */
-        $model = new $class;
+        $model = new $class();
         /** @var EloquentQueryBuilder $query */
         $query = $model->newEloquentBuilder($query)->setModel($model);
         ($this->callback)($query);
         $query->select([$model->getKeyName()]);
     }
 
-
     /**
-     * filter base on polymorphic relation type
+     * filter base on polymorphic relation type.
+     *
      * @param EloquentQueryBuilder $query
-     * @param string $type
+     * @param string               $type
      */
     private function addWhereMorph(EloquentQueryBuilder $query, string $type)
     {
         $class = Relation::getMorphedModel($type) ?? $type;
         $query->where($this->polymorphicRelation->getMorphType(), '=', $type)
             ->whereIn($this->polymorphicRelation->getForeignKeyName(), function ($query) use ($class) {
-                $this->applyCallback($class,$query);
+                $this->applyCallback($class, $query);
             });
     }
-
 
     /**
      * @param $query
@@ -103,13 +102,10 @@ class Morphable
      * @param array $morphedRelations
      * @param $method
      */
-    public static function filterPolymorphicRelation(EloquentQueryBuilder $query, MorphTo $polymorphicRelation,callable $callback, array $morphedRelations, string $method)
+    public static function filterPolymorphicRelation(EloquentQueryBuilder $query, MorphTo $polymorphicRelation, callable $callback, array $morphedRelations, string $method)
     {
         (
             new self(...func_get_args())
         )->applyFilter();
     }
-
-
-
 }
